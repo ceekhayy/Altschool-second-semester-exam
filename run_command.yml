@@ -1,0 +1,20 @@
+---
+- name: deploy lamp stack
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy file with owner and permissions
+      ansible.builtin.copy:
+        src: /home/vagrant/altschool_exam/deploy.sh
+        dest: /home/vagrant/altschool_exam/deploy.sh
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Set COMPOSER_ALLOW_SUPERUSER environment variable
+      ansible.builtin.set_fact:
+        COMPOSER_ALLOW_SUPERUSER: "1"
+
+    - name: install lamp stack and laravel
+      script: /home/vagrant/altschool_exam/deploy.sh
+
